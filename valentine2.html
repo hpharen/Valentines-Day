@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Heart Animation</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
+        
+        body {
+            background-color: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            flex-direction: column;
+            position: relative;
+        }
+        svg {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 90vh;
+            stroke: red;
+            fill: none;
+            stroke-width: 8;
+            stroke-linecap: round;
+            stroke-dasharray: 5000;
+            stroke-dashoffset: 5000;
+            animation: drawHeart 5s linear forwards, fillHeart 4s ease-in-out 3s forwards; /* Fill fades in slowly over 4s */
+        }
+        @keyframes drawHeart {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+        @keyframes fillHeart {
+            from {
+                fill-opacity: 0; /* Start with transparent fill */
+            }
+            to {
+                fill-opacity: 1; /* Gradually become fully filled */
+                fill: red; /* Set fill color at the end */
+            }
+        }
+        .falling-heart {
+            position: absolute;
+            top: -50px;
+            font-size: 24px;
+            animation: fall 5s linear infinite;
+        }
+        @keyframes fall {
+            from {
+                transform: translateY(-50px) rotate(0deg);
+                opacity: 1;
+            }
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .text {
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: white;
+            font-family: 'Dancing Script', cursive;
+            text-align: center;
+            opacity: 0;
+            animation: fadeIn 3s ease-in-out 3s forwards; /* Fade in after 3s */
+            width: 80%;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .sliding-image {
+            position: absolute;
+            top: 65%;
+            left: 100vw;
+            transform: translateY(-50%);
+            width: 300px;
+            animation: slideIn 1s ease-in-out 5s forwards; /* Start sliding after 5s */
+        }
+        @keyframes slideIn {
+            to {
+                left: 50%;
+                transform: translate(-50%, -50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <svg viewBox="0 0 1000 800">
+        <path d="M500,150 
+                 C800,-100, 1000,300, 500,700 
+                 C0,300, 200,-100, 500,150" />
+    </svg>    
+    <div class="text">Happy Valentine's Day</div>
+    <img src="https://i.redd.it/the-rose-mouth-phenomenon-v0-nc7y3avj21sc1.png?width=1920&format=png&auto=webp&s=15878d1c1f1ff50a7c43c97362d1c62680fc4fe9" alt="Rose Mouth" class="sliding-image">
+    <script>
+        function createFallingHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('falling-heart');
+            const colors = ['❤️', '🤍', '💕', '💖'];
+            heart.innerHTML = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(heart);
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.animationDuration = Math.random() * 3 + 2 + 's';
+            heart.style.transform = `rotate(${Math.random() * 360}deg)`;
+            setTimeout(() => heart.remove(), 5000);
+        }
+        setInterval(createFallingHeart, 50);
+    </script>
+</body>
+</html>
